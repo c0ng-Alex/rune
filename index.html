@@ -1,0 +1,2391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英雄联盟手游 · 符文大乱斗全符文详解 | 2026音浪赛季S7</title>
+<style>
+  :root {
+    --bg-primary: #0a0e1a;
+    --bg-secondary: #111827;
+    --bg-card: #1a2236;
+    --bg-card-hover: #243049;
+    --border-color: #2d3a52;
+    --text-primary: #e8ecf4;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --accent-gold: #c9aa66;
+    --accent-gold-light: #e8d5a3;
+    --accent-blue: #3b82f6;
+    --accent-purple: #8b5cf6;
+    --accent-cyan: #06b6d4;
+    --accent-red: #ef4444;
+    --accent-green: #22c55e;
+    --rune-silver: #9ca3af;
+    --rune-gold: #f59e0b;
+    --rune-prism: #a855f7;
+    --rune-silver-bg: rgba(156, 163, 175, 0.15);
+    --rune-gold-bg: rgba(245, 158, 11, 0.15);
+    --rune-prism-bg: rgba(168, 85, 247, 0.15);
+    --tier-splus: #fbbf24;
+    --tier-s: #f97316;
+    --tier-a: #22c55e;
+    --tier-b: #3b82f6;
+    --tier-c: #6b7280;
+    --glow-gold: 0 0 20px rgba(201, 170, 102, 0.4);
+    --glow-prism: 0 0 20px rgba(168, 85, 247, 0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* 背景装饰 */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(201, 170, 102, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* 顶部横幅 */
+  .hero {
+    position: relative;
+    padding: 40px 20px 30px;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(20, 30, 60, 0.8) 0%, transparent 100%);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent-gold-light) 0%, var(--accent-gold) 50%, #a87c3a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    text-shadow: 0 0 40px rgba(201, 170, 102, 0.3);
+  }
+
+  .hero-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    letter-spacing: 4px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 4px 16px;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(59, 130, 246, 0.2));
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--accent-purple);
+    font-weight: 600;
+  }
+
+  /* 主容器 */
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 搜索和筛选栏 */
+  .toolbar {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .search-box {
+    flex: 1;
+    min-width: 250px;
+    position: relative;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 12px 16px 12px 44px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    outline: none;
+  }
+
+  .search-box input:focus {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 3px rgba(201, 170, 102, 0.15);
+  }
+
+  .search-box::before {
+    content: '🔍';
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+  }
+
+  .filter-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 8px 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.25s;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+  }
+
+  .filter-btn.active {
+    background: linear-gradient(135deg, rgba(201, 170, 102, 0.2), rgba(168, 124, 58, 0.2));
+    border-color: var(--accent-gold);
+    color: var(--accent-gold-light);
+    font-weight: 600;
+  }
+
+  /* 分类标签区 */
+  .category-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    overflow-x: auto;
+    padding-bottom: 1px;
+  }
+
+  .category-tab {
+    padding: 10px 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    position: relative;
+    white-space: nowrap;
+    transition: color 0.25s;
+  }
+
+  .category-tab:hover { color: var(--text-primary); }
+
+  .category-tab.active {
+    color: var(--accent-gold);
+    font-weight: 600;
+  }
+
+  .category-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    border-radius: 2px;
+  }
+
+  /* 主内容区布局 */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 24px;
+  }
+
+  /* 侧边筛选栏 */
+  .sidebar {
+    position: sticky;
+    top: 20px;
+    align-self: start;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+  }
+
+  .sidebar-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .sidebar-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sidebar-title::before {
+    content: '';
+    width: 3px;
+    height: 14px;
+    background: var(--accent-gold);
+    border-radius: 2px;
+  }
+
+  .sidebar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .sidebar-item {
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sidebar-item:hover {
+    background: var(--bg-card);
+    color: var(--text-primary);
+  }
+
+  .sidebar-item.active {
+    background: linear-gradient(135deg, rgba(201, 170, 102, 0.15), rgba(168, 124, 58, 0.1));
+    color: var(--accent-gold-light);
+    font-weight: 600;
+  }
+
+  .sidebar-item .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* 符文网格 */
+  .rune-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  /* 符文卡片 */
+  .rune-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rune-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--rune-color, var(--accent-blue)), transparent);
+    opacity: 0.7;
+  }
+
+  .rune-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--rune-color, var(--accent-blue));
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 20px var(--rune-glow, rgba(59, 130, 246, 0.2));
+    background: var(--bg-card-hover);
+  }
+
+  .rune-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .rune-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .rune-icon.silver {
+    background: linear-gradient(135deg, #4b5563, #6b7280);
+    box-shadow: 0 2px 10px rgba(156, 163, 175, 0.3);
+  }
+
+  .rune-icon.gold {
+    background: linear-gradient(135deg, #b45309, #f59e0b);
+    box-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
+  }
+
+  .rune-icon.prism {
+    background: linear-gradient(135deg, #7c3aed, #a855f7, #ec4899);
+    box-shadow: 0 2px 10px rgba(168, 85, 247, 0.4);
+    animation: prismGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes prismGlow {
+    0%, 100% { box-shadow: 0 2px 10px rgba(168, 85, 247, 0.4); }
+    50% { box-shadow: 0 2px 20px rgba(236, 72, 153, 0.5); }
+  }
+
+  .rune-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .rune-tags {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+
+  .rune-tag {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .tag-quality-silver {
+    background: var(--rune-silver-bg);
+    color: var(--rune-silver);
+    border: 1px solid rgba(156, 163, 175, 0.3);
+  }
+
+  .tag-quality-gold {
+    background: var(--rune-gold-bg);
+    color: var(--rune-gold);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  .tag-quality-prism {
+    background: var(--rune-prism-bg);
+    color: var(--rune-prism);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+  }
+
+  .tag-tier {
+    font-weight: 800;
+  }
+
+  .tag-tier-splus { color: var(--tier-splus); background: rgba(251, 191, 36, 0.15); border: 1px solid rgba(251, 191, 36, 0.3); }
+  .tag-tier-s { color: var(--tier-s); background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.3); }
+  .tag-tier-a { color: var(--tier-a); background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); }
+  .tag-tier-b { color: var(--tier-b); background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); }
+  .tag-tier-c { color: var(--tier-c); background: rgba(107, 114, 128, 0.15); border: 1px solid rgba(107, 114, 128, 0.3); }
+
+  .rune-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .rune-card-footer {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .rune-category {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .rune-detail-btn {
+    font-size: 0.75rem;
+    color: var(--accent-gold);
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .rune-detail-btn:hover { text-decoration: underline; }
+
+  /* 详情弹窗 */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .modal-overlay.show {
+    display: flex;
+    opacity: 1;
+  }
+
+  .modal {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .modal-overlay.show .modal {
+    transform: scale(1);
+  }
+
+  .modal-header {
+    padding: 24px 24px 20px;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    background: linear-gradient(180deg, rgba(201, 170, 102, 0.08), transparent);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .modal-close:hover {
+    background: var(--accent-red);
+    color: white;
+    border-color: var(--accent-red);
+  }
+
+  .modal-title-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .modal-rune-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+  }
+
+  .modal-rune-icon.silver { background: linear-gradient(135deg, #4b5563, #6b7280); }
+  .modal-rune-icon.gold { background: linear-gradient(135deg, #b45309, #f59e0b); }
+  .modal-rune-icon.prism { background: linear-gradient(135deg, #7c3aed, #a855f7, #ec4899); }
+
+  .modal-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+
+  .modal-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .modal-body {
+    padding: 24px;
+  }
+
+  .modal-section {
+    margin-bottom: 20px;
+  }
+
+  .modal-section:last-child { margin-bottom: 0; }
+
+  .modal-section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .modal-section-title::before {
+    content: '';
+    width: 3px;
+    height: 14px;
+    background: var(--accent-gold);
+    border-radius: 2px;
+  }
+
+  .modal-section-content {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .modal-section-content p { margin-bottom: 8px; }
+  .modal-section-content p:last-child { margin-bottom: 0; }
+
+  .param-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .param-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .param-table td:first-child {
+    color: var(--text-muted);
+    width: 40%;
+    font-size: 0.8rem;
+  }
+
+  .param-table td:last-child {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .hero-tag {
+    padding: 4px 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+  }
+
+  /* 套路推荐专区 */
+  .builds-section {
+    margin-top: 40px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title .icon { font-size: 1.4rem; }
+
+  .build-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  .build-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 18px;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .build-card:hover {
+    border-color: var(--accent-purple);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+  }
+
+  .build-type {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .build-type.t0 {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(249, 115, 22, 0.2));
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.4);
+  }
+
+  .build-type.fun {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));
+    color: #e879f9;
+    border: 1px solid rgba(168, 85, 247, 0.4);
+  }
+
+  .build-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .build-core {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .build-runes {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .build-rune {
+    padding: 4px 10px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+  }
+
+  .build-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* 统计信息 */
+  .stats-bar {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .stat-icon {
+    font-size: 1.3rem;
+  }
+
+  .stat-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-value {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* 页脚 */
+  .footer {
+    margin-top: 60px;
+    padding: 30px 20px;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer a {
+    color: var(--accent-gold);
+    text-decoration: none;
+  }
+
+  /* 空状态 */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+  }
+
+  .empty-state .icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+    opacity: 0.5;
+  }
+
+  /* 滚动条 */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg-primary); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+  /* 响应式 */
+  @media (max-width: 900px) {
+    .main-layout { grid-template-columns: 1fr; }
+    .sidebar {
+      position: static;
+      max-height: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .sidebar-section { margin-bottom: 0; }
+    .hero-title { font-size: 1.6rem; }
+  }
+
+  @media (max-width: 600px) {
+    .rune-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+    .rune-card { padding: 12px; }
+    .rune-icon { width: 40px; height: 40px; font-size: 1.2rem; }
+    .rune-name { font-size: 0.9rem; }
+    .hero-title { font-size: 1.3rem; letter-spacing: 1px; }
+    .hero-subtitle { font-size: 0.8rem; letter-spacing: 2px; }
+    .toolbar { flex-direction: column; align-items: stretch; }
+    .build-grid { grid-template-columns: 1fr; }
+  }
+
+  /* 返回顶部 */
+  .back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-gold), #a87c3a);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 15px rgba(201, 170, 102, 0.4);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .back-to-top:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(201, 170, 102, 0.5);
+  }
+
+  /* 提示徽章 */
+  .notice-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+
+<!-- 顶部横幅 -->
+<div class="hero">
+  <div class="hero-title">符文大乱斗 · 全符文详解</div>
+  <div class="hero-subtitle">英雄联盟手游 · 2026音浪赛季S7</div>
+  <div class="hero-badge">版本 7.3b · 数据更新于 2026-10-14</div>
+</div>
+
+<div class="container">
+  <!-- 搜索和工具栏 -->
+  <div class="toolbar">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜索符文名称、效果、适配英雄...">
+    </div>
+    <div class="filter-group">
+      <button class="filter-btn active" data-quality="all">全部品质</button>
+      <button class="filter-btn" data-quality="prism">棱彩</button>
+      <button class="filter-btn" data-quality="gold">黄金</button>
+      <button class="filter-btn" data-quality="silver">白银</button>
+    </div>
+  </div>
+
+  <!-- 分类标签 -->
+  <div class="category-tabs" id="categoryTabs">
+    <button class="category-tab active" data-cat="all">全部符文</button>
+    <button class="category-tab" data-cat="heartsteel">心之钢套系</button>
+    <button class="category-tab" data-cat="truedamage">真实伤害套系</button>
+    <button class="category-tab" data-cat="rock">五连摇滚套系</button>
+    <button class="category-tab" data-cat="adc">射手/普攻流</button>
+    <button class="category-tab" data-cat="mage">法师/技能流</button>
+    <button class="category-tab" data-cat="tank">坦克/前排流</button>
+    <button class="category-tab" data-cat="support">辅助/治疗流</button>
+    <button class="category-tab" data-cat="assassin">刺客/突袭流</button>
+    <button class="category-tab" data-cat="special">特殊功能</button>
+    <button class="category-tab" data-cat="hero">英雄专属</button>
+    <button class="category-tab" data-cat="return">返场符文</button>
+  </div>
+
+  <!-- 统计栏 -->
+  <div class="stats-bar" id="statsBar">
+    <div class="stat-item">
+      <div class="stat-icon">📜</div>
+      <div class="stat-info">
+        <span class="stat-value" id="totalCount">0</span>
+        <span class="stat-label">符文总数</span>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">💎</div>
+      <div class="stat-info">
+        <span class="stat-value" id="prismCount">0</span>
+        <span class="stat-label">棱彩符文</span>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">🏆</div>
+      <div class="stat-info">
+        <span class="stat-value" id="splusCount">0</span>
+        <span class="stat-label">S+ 神卡</span>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">🔥</div>
+      <div class="stat-info">
+        <span class="stat-value">5</span>
+        <span class="stat-label">T0 套路</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主布局 -->
+  <div class="main-layout">
+    <!-- 侧边栏 -->
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">强度梯队</div>
+        <div class="sidebar-list">
+          <div class="sidebar-item active" data-tier="all">
+            <span class="dot" style="background: var(--accent-gold)"></span>
+            全部强度
+          </div>
+          <div class="sidebar-item" data-tier="S+">
+            <span class="dot" style="background: var(--tier-splus)"></span>
+            S+ 版本T0
+          </div>
+          <div class="sidebar-item" data-tier="S">
+            <span class="dot" style="background: var(--tier-s)"></span>
+            S 强势
+          </div>
+          <div class="sidebar-item" data-tier="A">
+            <span class="dot" style="background: var(--tier-a)"></span>
+            A 优秀
+          </div>
+          <div class="sidebar-item" data-tier="B">
+            <span class="dot" style="background: var(--tier-b)"></span>
+            B 一般
+          </div>
+          <div class="sidebar-item" data-tier="C">
+            <span class="dot" style="background: var(--tier-c)"></span>
+            C 较弱
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">排序方式</div>
+        <div class="sidebar-list">
+          <div class="sidebar-item active" data-sort="tier">
+            <span class="dot" style="background: var(--accent-gold)"></span>
+            按强度排序
+          </div>
+          <div class="sidebar-item" data-sort="quality">
+            <span class="dot" style="background: var(--accent-purple)"></span>
+            按品质排序
+          </div>
+          <div class="sidebar-item" data-sort="name">
+            <span class="dot" style="background: var(--accent-blue)"></span>
+            按名称排序
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">快速导航</div>
+        <div class="sidebar-list">
+          <div class="sidebar-item" onclick="scrollToSection('runeGrid')">
+            <span class="dot" style="background: var(--accent-cyan)"></span>
+            符文图鉴
+          </div>
+          <div class="sidebar-item" onclick="scrollToSection('buildsSection')">
+            <span class="dot" style="background: var(--accent-red)"></span>
+            T0邪修黑科技
+          </div>
+          <div class="sidebar-item" onclick="scrollToSection('funSection')">
+            <span class="dot" style="background: #e879f9"></span>
+            娱乐骚套路
+          </div>
+          <div class="sidebar-item" onclick="scrollToSection('guideSection')">
+            <span class="dot" style="background: var(--accent-green)"></span>
+            选符文指南
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主内容 -->
+    <div class="main-content">
+      <!-- 符文网格 -->
+      <div class="rune-grid" id="runeGrid"></div>
+
+      <!-- 空状态 -->
+      <div class="empty-state" id="emptyState" style="display:none">
+        <div class="icon">🔍</div>
+        <div>没有找到匹配的符文</div>
+        <div style="font-size: 0.85rem; margin-top: 6px; opacity: 0.7;">试试其他关键词或筛选条件</div>
+      </div>
+
+      <!-- T0邪修套路 -->
+      <div class="builds-section" id="buildsSection">
+        <div class="section-header">
+          <div class="section-title"><span class="icon">⚡</span>版本T0邪修黑科技套路</div>
+        </div>
+        <div class="build-grid" id="t0BuildsGrid"></div>
+      </div>
+
+      <!-- 娱乐骚套路 -->
+      <div class="builds-section" id="funSection">
+        <div class="section-header">
+          <div class="section-title"><span class="icon">🎮</span>娱乐骚操作流派</div>
+        </div>
+        <div class="build-grid" id="funBuildsGrid"></div>
+      </div>
+
+      <!-- 选符文指南 -->
+      <div class="builds-section" id="guideSection">
+        <div class="section-header">
+          <div class="section-title"><span class="icon">📖</span>选符文优先级 & 避坑指南</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+          <!-- 必拿神卡 -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+              <span style="font-size: 1.3rem;">🏆</span>
+              <span style="font-size: 1rem; font-weight: 700; color: var(--tier-splus);">最高优先级 · 看到必拿S+神卡</span>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+              <span class="hero-tag" style="background: var(--rune-prism-bg); border-color: rgba(168,85,247,0.3); color: var(--rune-prism);">超凡邪疗</span>
+              <span class="hero-tag" style="background: var(--rune-prism-bg); border-color: rgba(168,85,247,0.3); color: var(--rune-prism);">心之钢</span>
+              <span class="hero-tag" style="background: var(--rune-prism-bg); border-color: rgba(168,85,247,0.3); color: var(--rune-prism);">二重奏</span>
+              <span class="hero-tag" style="background: var(--rune-prism-bg); border-color: rgba(168,85,247,0.3); color: var(--rune-prism);">节拍续燃</span>
+              <span class="hero-tag" style="background: var(--rune-prism-bg); border-color: rgba(168,85,247,0.3); color: var(--rune-prism);">歌利亚巨人</span>
+              <span class="hero-tag" style="background: var(--rune-prism-bg); border-color: rgba(168,85,247,0.3); color: var(--rune-prism);">技能回响</span>
+              <span class="hero-tag" style="background: var(--rune-prism-bg); border-color: rgba(168,85,247,0.3); color: var(--rune-prism);">幻刺</span>
+              <span class="hero-tag" style="background: var(--rune-prism-bg); border-color: rgba(168,85,247,0.3); color: var(--rune-prism);">致命节奏</span>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">棱彩品质，版本T0，拿到就是赚到</div>
+          </div>
+
+          <!-- 套系优先级 -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+              <span style="font-size: 1.3rem;">📊</span>
+              <span style="font-size: 1rem; font-weight: 700; color: var(--accent-gold);">套系凑羁绊优先级</span>
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 2;">
+              <div><span style="color: var(--rune-prism); font-weight: 600;">棱彩单卡</span> ＞ 凑4件套羁绊 ＞ 黄金散件 ＞ 白银散件</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">优先拿质变棱彩符文，再凑同套羁绊<br>不强行凑羁绊浪费强势散件</div>
+            </div>
+          </div>
+
+          <!-- 各位置毕业思路 -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+              <span style="font-size: 1.3rem;">🎯</span>
+              <span style="font-size: 1rem; font-weight: 700; color: var(--accent-blue);">各位置通用毕业思路</span>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.9;">
+              <div><span style="color: var(--accent-gold);">🛡️ 坦克：</span>心之钢套 + 坦度符文，叠血叠经济，后期无敌</div>
+              <div><span style="color: var(--accent-gold);">🏹 射手：</span>真实伤害套 + 攻速符文，破坦收割</div>
+              <div><span style="color: var(--accent-gold);">🔮 法师：</span>散件爆发 + 技能回响/珠光护手</div>
+              <div><span style="color: var(--accent-gold);">🗡️ 刺客：</span>摇滚收割套 + 隐身符文，无限滚雪球</div>
+              <div><span style="color: var(--accent-gold);">💚 辅助：</span>纯叠奶套，全队永续续航</div>
+            </div>
+          </div>
+
+          <!-- 避坑指南 -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+              <span style="font-size: 1.3rem;">⚠️</span>
+              <span style="font-size: 1rem; font-weight: 700; color: var(--accent-red);">绝对避坑 · 版本弱势</span>
+            </div>
+            <div style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.8;">
+              <div>• <span style="color: #f87171;">大招核心英雄</span>（凯南、稻草人）慎拿尤里卡</div>
+              <div>• <span style="color: #f87171;">短手近战</span>拿精巧狙击手收益待核实</div>
+              <div>• <span style="color: #f87171;">纯输出脆皮</span>拿坚如磐石等纯坦符文浪费词条</div>
+              <div>• 部分名称带"待核"的符文，以游戏内图鉴机制为准</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 页脚 -->
+<div class="footer">
+  <p>英雄联盟手游 · 符文大乱斗全符文详解 | 2026音浪赛季S7</p>
+  <p style="margin-top: 6px;">数据来源：官方公告 | 部分机制以游戏内图鉴为准</p>
+</div>
+
+<!-- 返回顶部 -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+<!-- 详情弹窗 -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-title-row">
+        <div class="modal-rune-icon" id="modalIcon">💠</div>
+        <div>
+          <div class="modal-title" id="modalTitle">符文名称</div>
+          <div class="modal-tags" id="modalTags"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ============ 符文数据 ============
+const runeData = [
+  // ===== 心之钢套系 =====
+  {
+    id: 1, name: "心之钢", quality: "prism", tier: "S+", category: "heartsteel",
+    icon: "💙",
+    desc: "通过不同途径获得\"钢霸符\"，每积攒100个即可开启宝箱获得金币、锻造器和额外符文卡。同套系符文越多，钢霸符获取越多。",
+    detail: "版本发育T0神卡，前期稳叠层，后期血量伤害双碾压。",
+    heroes: ["盖伦", "诺手", "蒙多", "石头人", "猪妹", "奥恩"],
+    params: {
+      "宝箱阈值": "100个钢霸符",
+      "套系倍率(1/2/3/4张)": "1x / 1.3x / 2x / 6x",
+      "品质": "棱彩"
+    },
+    combo: "红蓝混音 + 不死鼓点 + 热单成金（四钢霸成型，经济碾压全局）"
+  },
+  {
+    id: 2, name: "红蓝混音", quality: "gold", tier: "S", category: "heartsteel",
+    icon: "🔴🔵",
+    desc: "持续叠加钢霸符，周期性对周围敌人造成震荡伤害。",
+    detail: "搭配心之钢快速叠层，弥补前期伤害不足。",
+    heroes: ["近战前排", "贴脸战士", "团控坦克"],
+    params: {
+      "每分钟钢霸符上限": "60层",
+      "品质": "黄金"
+    }
+  },
+  {
+    id: 3, name: "热单成金", quality: "silver", tier: "A", category: "heartsteel",
+    icon: "🔥",
+    desc: "自动获取钢霸符，技能命中英雄可缩短叠层等待时间。",
+    detail: "无需对拼，远程稳定叠层，容错极高。",
+    heroes: ["法师", "技能型英雄", "远程消耗位"],
+    params: {
+      "自动叠层": "每6秒获得5层",
+      "技能命中减少": "0.5秒等待时间",
+      "品质": "白银"
+    }
+  },
+  {
+    id: 4, name: "不死鼓点", quality: "gold", tier: "S", category: "heartsteel",
+    icon: "🥁",
+    desc: "濒死锁血续命，瞬间爆发大量钢霸符。",
+    detail: "版本最强保命符文，大幅降低暴毙概率。前排脆皮通用。",
+    heroes: ["一切前排", "脆皮C位"],
+    params: {
+      "冷却时间": "150秒",
+      "品质": "黄金"
+    }
+  },
+
+  // ===== 真实伤害套系 =====
+  {
+    id: 5, name: "二重奏", quality: "prism", tier: "S+", category: "truedamage",
+    icon: "🎵",
+    desc: "普攻附带真实伤害；随真实伤害套系符文数量提高自身真实伤害增幅。",
+    detail: "坦克克星，普攻输出核心神卡，满真伤流可直接融化坦克。",
+    heroes: ["薇恩", "卡莎", "德莱文", "剑姬", "所有ADC", "普攻战士"],
+    params: {
+      "套系真伤增幅上限": "100%",
+      "每个目标冷却": "2秒",
+      "品质": "棱彩"
+    },
+    combo: "二重奏 + 真实伤害（薇恩之力）+ 金属加冕（满真伤流）"
+  },
+  {
+    id: 6, name: "真实伤害·薇恩", quality: "gold", tier: "S", category: "truedamage",
+    icon: "🏹",
+    desc: "获得薇恩之力，普攻3次造成真实伤害。",
+    detail: "走A叠标记，专治高护甲坦克。攻速型射手和近战普攻流适配。",
+    heroes: ["攻速型射手", "近战普攻流"],
+    params: {
+      "触发方式": "普攻3次",
+      "品质": "黄金"
+    }
+  },
+  {
+    id: 7, name: "断音爆破", quality: "silver", tier: "A", category: "truedamage",
+    icon: "💥",
+    desc: "技能命中附加可暴击真实伤害（社区旧述，以游戏内图鉴为准）。",
+    detail: "技能型英雄适配，官方机制待核实。",
+    heroes: ["法师", "刺客", "爆发战士"],
+    params: {
+      "品质": "白银",
+      "注意": "名称与机制待游戏内图鉴核实"
+    },
+    notice: true
+  },
+  {
+    id: 8, name: "金属加冕", quality: "silver", tier: "A", category: "truedamage",
+    icon: "👑",
+    desc: "释放终极技能后，短时获得攻击力、法术强度、护甲与魔法抗性加成。",
+    detail: "持续输出C位适配，大招触发全面属性提升。",
+    heroes: ["持续输出C位"],
+    params: {
+      "攻击力加成": "30",
+      "法术强度加成": "60",
+      "护甲加成": "40",
+      "魔法抗性加成": "40",
+      "品质": "白银"
+    }
+  },
+
+  // ===== 五连摇滚套系 =====
+  {
+    id: 9, name: "节拍续燃", quality: "prism", tier: "S+", category: "rock",
+    icon: "🎸",
+    desc: "连续击杀刷新小技能CD，叠加移速、全能吸血（社区旧述，以图鉴为准）。",
+    detail: "团战永续作战，收割型英雄的天花板符文。",
+    heroes: ["阿卡丽", "劫", "亚索", "剑圣", "收割型刺客", "团战战士"],
+    params: {
+      "品质": "棱彩",
+      "注意": "名称与机制待游戏内图鉴核实"
+    },
+    combo: "节拍续燃 + 星火暴走 + 天使升调（五杀永动流）",
+    notice: true
+  },
+  {
+    id: 10, name: "星火暴走", quality: "gold", tier: "S", category: "rock",
+    icon: "⭐",
+    desc: "连杀后高额攻速、技能急速加成（社区旧述，以图鉴为准）。",
+    detail: "持续输出拉满，攻速刺客和收割ADC适配。",
+    heroes: ["攻速刺客", "收割ADC"],
+    params: {
+      "品质": "黄金",
+      "注意": "名称与机制待游戏内图鉴核实"
+    },
+    notice: true
+  },
+  {
+    id: 11, name: "天使升调", quality: "gold", tier: "S", category: "rock",
+    icon: "😇",
+    desc: "提升英雄攻击距离，近战与远程分别获得不同加成。",
+    detail: "靠大招打核心的英雄适配，显著提升输出范围。",
+    heroes: ["凯南", "乌鸦", "稻草人", "诺手"],
+    params: {
+      "近战攻击距离": "+60",
+      "远程攻击距离": "+20",
+      "品质": "黄金"
+    }
+  },
+  {
+    id: 12, name: "魔王弹幕", quality: "silver", tier: "A", category: "rock",
+    icon: "👿",
+    desc: "连杀状态释放技能触发额外弹幕伤害（社区旧述，以图鉴为准）。",
+    detail: "补足AOE输出，团战法师战士适配。",
+    heroes: ["团战AOE法师", "战士"],
+    params: {
+      "品质": "白银",
+      "注意": "名称与机制待游戏内图鉴核实"
+    },
+    notice: true
+  },
+
+  // ===== 射手/普攻流 =====
+  {
+    id: 13, name: "起源·致命节奏", quality: "prism", tier: "S+", category: "adc",
+    icon: "⚡",
+    desc: "每层提供攻击速度，叠满后提供攻击距离。",
+    detail: "普攻流版本天花板，必拿神卡。",
+    heroes: ["卡莎", "韦鲁斯", "金克丝", "所有攻速ADC"],
+    params: {
+      "每层攻速": "6%~15%",
+      "满层攻击距离": "+25",
+      "品质": "棱彩"
+    }
+  },
+  {
+    id: 14, name: "亮剑", quality: "gold", tier: "S", category: "adc",
+    icon: "⚔️",
+    desc: "舍弃攻击距离，换取攻击、血量、吸血、移速加成（旧述待复核）。",
+    detail: "近战向符文，近战普攻战士和贴脸刺客适配。",
+    heroes: ["剑圣", "蛮王", "剑姬", "近战普攻战士"],
+    params: {
+      "品质": "黄金",
+      "注意": "机制数值待游戏内图鉴复核"
+    },
+    notice: true
+  },
+  {
+    id: 15, name: "双刀流", quality: "silver", tier: "A", category: "adc",
+    icon: "🗡️",
+    desc: "稳定增加攻击距离，长手射手专属（社区旧述）。",
+    detail: "小短手ADC适配，官方机制待核实。",
+    heroes: ["德莱文", "烬"],
+    params: {
+      "品质": "白银",
+      "注意": "名称与机制待游戏内图鉴核实"
+    },
+    notice: true
+  },
+  {
+    id: 16, name: "让子弹飞", quality: "gold", tier: "S", category: "adc",
+    icon: "🔫",
+    desc: "普攻触发额外弹道，伤害随攻击次数递增。",
+    detail: "持续平A射手适配，越打伤害越高。",
+    heroes: ["持续平A射手"],
+    params: {
+      "触发概率": "50%",
+      "品质": "黄金"
+    }
+  },
+  {
+    id: 17, name: "精巧狙击手", quality: "silver", tier: "B", category: "adc",
+    icon: "🎯",
+    desc: "远距离增伤/减速类符文卡（旧述待图鉴复核）。",
+    detail: "长手消耗ADC适配。",
+    heroes: ["长手消耗ADC"],
+    params: {
+      "品质": "白银",
+      "注意": "机制数值待游戏内图鉴复核"
+    },
+    notice: true
+  },
+  {
+    id: 18, name: "火上浇油", quality: "gold", tier: "A", category: "adc",
+    icon: "🔥",
+    desc: "普通攻击附带持续魔法伤害，可无限叠加。",
+    detail: "打坦专用射手，百分比最大生命值伤害。",
+    heroes: ["打坦专用射手"],
+    params: {
+      "持续伤害": "5秒内2%目标最大生命值魔法伤害",
+      "叠加": "可无限叠加",
+      "品质": "黄金"
+    }
+  },
+  {
+    id: 19, name: "箭雨·岚", quality: "prism", tier: "S", category: "adc",
+    icon: "🏹",
+    desc: "积攒能量释放真实伤害箭雨。",
+    detail: "所有团战型射手适配，真实伤害范围输出。",
+    heroes: ["所有团战型射手"],
+    params: {
+      "伤害类型": "真实伤害",
+      "所需能量": "20",
+      "能量积攒冷却": "0.25秒",
+      "箭雨落下时间": "0.68秒",
+      "品质": "棱彩"
+    }
+  },
+
+  // ===== 法师/技能爆发流 =====
+  {
+    id: 20, name: "珠光护手", quality: "gold", tier: "S+", category: "mage",
+    icon: "💎",
+    desc: "提供暴击率，暴击率随法术强度增长。",
+    detail: "所有爆发法师必备，技能暴击核心。",
+    heroes: ["小鱼人", "安妮", "狐狸", "泽拉斯", "所有爆发法师"],
+    params: {
+      "暴击率": "15 + 3%法术强度",
+      "品质": "黄金"
+    }
+  },
+  {
+    id: 21, name: "尤里卡", quality: "prism", tier: "S", category: "mage",
+    icon: "💡",
+    desc: "提供基于额外攻击力与法术强度的技能急速；可通过强化获得额外数值。",
+    detail: "双刃剑神卡，不靠大招的小技能爆发英雄适配。大招核心英雄需谨慎。",
+    heroes: ["瑞兹", "吸血鬼", "皎月"],
+    params: {
+      "技能急速": "20%额外攻击力 + 10%法术强度",
+      "强化额外数值": "最多50%",
+      "品质": "棱彩"
+    }
+  },
+  {
+    id: 22, name: "最终形态", quality: "gold", tier: "S", category: "mage",
+    icon: "🌟",
+    desc: "高额技能急速，参与击杀永久叠加（社区旧述，以图鉴为准）。",
+    detail: "持续放技能法师适配，越打CD越短。",
+    heroes: ["持续输出法师", "频繁输出英雄"],
+    params: {
+      "品质": "黄金",
+      "注意": "名称与机制待游戏内图鉴核实"
+    },
+    notice: true
+  },
+  {
+    id: 23, name: "雷霆", quality: "gold", tier: "S", category: "mage",
+    icon: "⚡",
+    desc: "大幅提升法术强度、生命值、双抗与体型；使用终极技能时大幅提升效果。",
+    detail: "法坦和大招核心法师适配，开大变身质变。",
+    heroes: ["铁男", "加里奥", "凯南", "法坦"],
+    params: {
+      "效果持续时间": "12秒",
+      "品质": "黄金"
+    }
+  },
+  {
+    id: 24, name: "炼狱导管", quality: "gold", tier: "A", category: "mage",
+    icon: "🌋",
+    desc: "技能命中叠加持续伤害。",
+    detail: "持续输出法师适配，叠加型持续伤害。",
+    heroes: ["持续输出法师"],
+    params: {
+      "伤害公式": "0.5~5 + 3%额外攻击力 + 1%法术强度",
+      "品质": "黄金"
+    }
+  },
+  {
+    id: 25, name: "技能回响", quality: "prism", tier: "S+", category: "mage",
+    icon: "🌀",
+    desc: "技能回响机制待游戏内图鉴确认（旧名：回响释放）。",
+    detail: "所有单段高伤技能英雄适配，爆发翻倍潜力。",
+    heroes: ["卡牌", "妖姬", "小法"],
+    params: {
+      "品质": "棱彩",
+      "注意": "机制待游戏内图鉴确认"
+    },
+    notice: true
+  },
+  {
+    id: 26, name: "超负荷", quality: "silver", tier: "A", category: "mage",
+    icon: "⚙️",
+    desc: "释放技能叠层，提升技能冷却回复速度与移动速度。",
+    detail: "多技能轮换法师适配，越打越快。",
+    heroes: ["多技能轮换法师"],
+    params: {
+      "每层冷却回复": "8%",
+      "每层移动速度": "8%",
+      "品质": "白银"
+    }
+  },
+  {
+    id: 27, name: "十字连爆", quality: "silver", tier: "B", category: "mage",
+    icon: "💢",
+    desc: "技能命中触发十字二次爆炸，补足AOE（社区旧述）。",
+    detail: "官方机制待核实。",
+    heroes: ["AOE法师"],
+    params: {
+      "品质": "白银",
+      "注意": "名称与机制待游戏内图鉴核实"
+    },
+    notice: true
+  },
+
+  // ===== 坦克/承伤前排流 =====
+  {
+    id: 28, name: "歌利亚巨人", quality: "prism", tier: "S+", category: "tank",
+    icon: "🗿",
+    desc: "获得额外生命值，体型变大。",
+    detail: "所有纯坦必拿，血量质变神卡。",
+    heroes: ["石头人", "龙龟", "奥恩", "塞恩", "所有纯坦"],
+    params: {
+      "额外生命值": "30%",
+      "品质": "棱彩"
+    }
+  },
+  {
+    id: 29, name: "坚如磐石", quality: "gold", tier: "S", category: "tank",
+    icon: "🪨",
+    desc: "提供基于等级的伤害减免。",
+    detail: "纯肉前排适配，等级越高减伤越多。",
+    heroes: ["纯肉前排"],
+    params: {
+      "伤害减免": "3.5~10.5（基于等级）",
+      "品质": "黄金"
+    }
+  },
+  {
+    id: 30, name: "力拔山兮", quality: "silver", tier: "A", category: "tank",
+    icon: "💪",
+    desc: "向前冲撞击退敌人，叠层提升移动速度。",
+    detail: "开团型坦克适配，冲阵控制加移速。",
+    heroes: ["开团型坦克"],
+    params: {
+      "层数上限": "10层",
+      "每层移速": "4%",
+      "撞人额外冷却": "0.25秒",
+      "品质": "白银"
+    }
+  },
+  {
+    id: 31, name: "救主力场", quality: "gold", tier: "S", category: "tank",
+    icon: "🛡️",
+    desc: "为范围内友军提供护盾与减伤，无血量下限触发限制。",
+    detail: "功能型前排和团队坦适配，团队保护核心。",
+    heroes: ["功能型前排", "团队坦"],
+    params: {
+      "触发条件": "无血量限制",
+      "品质": "黄金"
+    }
+  },
+  {
+    id: 32, name: "蛋白粉奶昔", quality: "silver", tier: "A", category: "tank",
+    icon: "🥤",
+    desc: "提升获得的治疗和护盾强度，强度随自身双抗增长。",
+    detail: "坦克和辅助通用，双抗越高治疗护盾越强。",
+    heroes: ["坦克", "辅助"],
+    params: {
+      "治疗护盾强度": "10% + 8%双抗",
+      "品质": "白银"
+    }
+  },
+  {
+    id: 33, name: "吞沙噬士", quality: "silver", tier: "B", category: "tank",
+    icon: "🏜️",
+    desc: "吸收敌方输出转化双抗，越挨打越肉（社区旧述）。",
+    detail: "官方机制待核实。",
+    heroes: ["承伤坦克"],
+    params: {
+      "品质": "白银",
+      "注意": "名称与机制待游戏内图鉴核实"
+    },
+    notice: true
+  },
+  {
+    id: 34, name: "生生不息", quality: "gold", tier: "S", category: "tank",
+    icon: "♾️",
+    desc: "降低自身受到的技能伤害，并将所减少的伤害量按比例转化为护盾。",
+    detail: "坦克核心防御符文，减伤转护盾越战越肉。",
+    heroes: ["所有坦克", "承伤前排"],
+    params: {
+      "技能伤害降低": "35%",
+      "护盾转化": "减少伤害量的200%",
+      "品质": "黄金"
+    }
+  },
+
+  // ===== 辅助/治疗护盾流 =====
+  {
+    id: 35, name: "超凡邪疗", quality: "prism", tier: "S+", category: "support",
+    icon: "💚",
+    desc: "治疗、护盾可叠加增益，每次治疗永久提升治疗护盾强度。",
+    detail: "软辅天花板，无限叠奶全队不死。版本T0辅助神卡。",
+    heroes: ["蔡文姬", "娜美", "风女", "璐璐", "所有软辅"],
+    params: {
+      "内置冷却": "0.5秒",
+      "每层加成": "0.4%治疗护盾强度",
+      "初始强度": "5%",
+      "永久提升": "每次治疗+0.3%",
+      "品质": "棱彩"
+    },
+    combo: "超凡邪疗 + 星愿疗愈 + 古式佳酿（无限叠奶，全队不死）"
+  },
+  {
+    id: 36, name: "星愿疗愈", quality: "gold", tier: "S", category: "support",
+    icon: "⭐",
+    desc: "给队友套盾/治疗，双方获得法强、技能急速（社区旧述）。",
+    detail: "官方机制待核实。",
+    heroes: ["治疗辅助", "护盾辅助"],
+    params: {
+      "品质": "黄金",
+      "注意": "名称与机制待游戏内图鉴核实"
+    },
+    notice: true
+  },
+  {
+    id: 37, name: "古式佳酿", quality: "silver", tier: "A", category: "support",
+    icon: "🍷",
+    desc: "使用技能时获得治疗；强化后大幅降低冷却、提升治疗效果。",
+    detail: "辅助通用续航符文，强化后效果更佳。",
+    heroes: ["所有辅助"],
+    params: {
+      "品质": "白银",
+      "强化效果": "降低冷却 + 提升治疗"
+    }
+  },
+  {
+    id: 38, name: "重整之旗", quality: "gold", tier: "A", category: "support",
+    icon: "🚩",
+    desc: "获得护盾时大幅降低受到的伤害；强化后脱战时获得护盾。",
+    detail: "护盾流辅助适配，额外生命值越高护盾越高。",
+    heroes: ["护盾辅助", "坦克"],
+    params: {
+      "品质": "黄金",
+      "强化效果": "脱战获得护盾"
+    }
+  },
+  {
+    id: 39, name: "皮克斯戏法", quality: "silver", tier: "B", category: "support",
+    icon: "🧚",
+    desc: "跟随友军，友军攻击同步发射飞弹补伤害（社区旧述）。",
+    detail: "官方机制待核实。",
+    heroes: ["辅助"],
+    params: {
+      "品质": "白银",
+      "注意": "名称与机制待游戏内图鉴核实"
+    },
+    notice: true
+  },
+
+  // ===== 刺客/位移突袭流 =====
+  {
+    id: 40, name: "幻刺", quality: "prism", tier: "S+", category: "assassin",
+    icon: "🥷",
+    desc: "7.2重做上架，刺客核心符文（机制待图鉴复核）。",
+    detail: "所有刺客天花板，重做后强度在线。",
+    heroes: ["劫", "阿卡丽", "螳螂", "琪亚娜", "所有刺客"],
+    params: {
+      "品质": "棱彩",
+      "注意": "机制待游戏内图鉴复核"
+    },
+    notice: true
+  },
+  {
+    id: 41, name: "疾风瞬步", quality: "gold", tier: "S", category: "assassin",
+    icon: "💨",
+    desc: "7.2重做上架，冲刺位移符文（参数待图鉴复核）。",
+    detail: "短腿刺客和战士适配，增加机动性。",
+    heroes: ["短腿刺客", "战士"],
+    params: {
+      "品质": "黄金",
+      "注意": "机制数值待游戏内图鉴复核"
+    },
+    notice: true
+  },
+  {
+    id: 42, name: "位移异变", quality: "silver", tier: "A", category: "assassin",
+    icon: "🌀",
+    desc: "所有位移距离增加，位移结束给护盾（社区旧述）。",
+    detail: "官方机制待核实。",
+    heroes: ["位移型英雄"],
+    params: {
+      "品质": "白银",
+      "注意": "名称与机制待游戏内图鉴核实"
+    },
+    notice: true
+  },
+  {
+    id: 43, name: "唤灵冲击", quality: "silver", tier: "B", category: "assassin",
+    icon: "👻",
+    desc: "7.2重做上架，增伤标记类符文（旧述待复核）。",
+    detail: "刺客爆发适配。",
+    heroes: ["刺客", "爆发战士"],
+    params: {
+      "品质": "白银",
+      "注意": "机制数值待游戏内图鉴复核"
+    },
+    notice: true
+  },
+  {
+    id: 44, name: "影流禁术", quality: "gold", tier: "S", category: "assassin",
+    icon: "🌑",
+    desc: "标记目标，提升对标记目标的伤害。",
+    detail: "刺客单体爆发核心，标记后伤害大幅提升。",
+    heroes: ["劫", "刺客", "单体爆发英雄"],
+    params: {
+      "标记伤害提升": "50%",
+      "品质": "黄金"
+    }
+  },
+
+  // ===== 特殊功能骚套路 =====
+  {
+    id: 45, name: "潘多拉的装备", quality: "gold", tier: "S", category: "special",
+    icon: "📦",
+    desc: "装备可随机重铸，概率直接出顶级神装（社区旧述）。",
+    detail: "赌狗流核心，官方机制待核实。",
+    heroes: ["全位置"],
+    params: {
+      "品质": "黄金",
+      "注意": "名称与机制待游戏内图鉴核实"
+    },
+    notice: true
+  },
+  {
+    id: 46, name: "后期大佬", quality: "silver", tier: "A", category: "special",
+    icon: "💰",
+    desc: "随时间提供金币，按累计金币提升伤害加成。",
+    detail: "大后期符文，时间越长越强。注意与\"氪金大佬\"区分。",
+    heroes: ["大后期核心"],
+    params: {
+      "金币获取": "每秒7金币",
+      "伤害加成": "每1000金币+0.4%伤害",
+      "品质": "白银"
+    }
+  },
+  {
+    id: 47, name: "心音轻弹", quality: "prism", tier: "S", category: "special",
+    icon: "💜",
+    desc: "每个魔法飞弹造成基于敌方最大生命值、自身额外生命值与治疗护盾强度的伤害。",
+    detail: "软辅和坦克输出核心，自身越肉伤害越高。",
+    heroes: ["软辅", "坦克", "治疗护盾流"],
+    params: {
+      "伤害公式": "1%敌方最大生命值 ×（1 + 0.02%自身额外生命值 + 300%治疗护盾强度）",
+      "触发距离": "8米",
+      "品质": "棱彩"
+    }
+  },
+  {
+    id: 48, name: "星落之盾", quality: "gold", tier: "S", category: "special",
+    icon: "🌟",
+    desc: "获得护盾时，自身造成的伤害中有30%为真实伤害。",
+    detail: "护盾流输出核心，获得护盾即获得真实伤害转化。",
+    heroes: ["护盾流英雄", "坦克", "辅助"],
+    params: {
+      "真实伤害占比": "30%",
+      "触发条件": "获得护盾时",
+      "品质": "黄金"
+    }
+  },
+  {
+    id: 49, name: "物理转法术", quality: "silver", tier: "A", category: "special",
+    icon: "🔄",
+    desc: "将额外攻击力按比例转化为法术强度，转换后的法强可被灭世者之帽强化。",
+    detail: "物理转法伤套路核心，特殊玩法必备。",
+    heroes: ["特殊玩法英雄"],
+    params: {
+      "转换比例": "240%（额外攻击力→法术强度）",
+      "帽子强化": "可被灭世者之帽强化",
+      "品质": "白银"
+    }
+  },
+  {
+    id: 50, name: "二重星光", quality: "silver", tier: "B", category: "special",
+    icon: "✨",
+    desc: "技能命中触发双星光追踪补伤（社区旧述）。",
+    detail: "官方机制待核实。",
+    heroes: ["法师"],
+    params: {
+      "品质": "白银",
+      "注意": "名称与机制待游戏内图鉴核实"
+    },
+    notice: true
+  },
+
+  // ===== 英雄专属之力 =====
+  {
+    id: 51, name: "赛娜之力", quality: "gold", tier: "S", category: "hero",
+    icon: "🖤",
+    desc: "拾取灵魂叠加攻击距离，赛娜专属质变。",
+    detail: "赛娜专属，无限成长攻击距离。",
+    heroes: ["赛娜"],
+    params: {
+      "每个灵魂攻击距离": "+3",
+      "拾取时间": "0.3秒",
+      "品质": "黄金"
+    }
+  },
+  {
+    id: 52, name: "俄洛伊之力", quality: "gold", tier: "A", category: "hero",
+    icon: "🐙",
+    desc: "常驻多触手作战，触手生成时若达上限先造成一次攻击。",
+    detail: "俄洛伊专属，多触手持续输出。",
+    heroes: ["俄洛伊"],
+    params: {
+      "品质": "黄金",
+      "特殊机制": "触手达上限时先生成攻击再替换"
+    }
+  },
+  {
+    id: 53, name: "卑尔维斯之力", quality: "gold", tier: "S", category: "hero",
+    icon: "👾",
+    desc: "虚空虫作战，叠层提升体型与伤害。",
+    detail: "卑尔维斯专属，大招触发虚空虫永久成长。",
+    heroes: ["卑尔维斯"],
+    params: {
+      "触发条件": "使用终极技能",
+      "成长效果": "击败敌人永久提升虚空虫体型和伤害",
+      "品质": "黄金"
+    }
+  },
+  {
+    id: 54, name: "暗裔信标", quality: "gold", tier: "A", category: "hero",
+    icon: "😈",
+    desc: "英雄之力·暗裔；伤害统计口径以减免前伤害为准。",
+    detail: "暗裔适配，机制以游戏内图鉴为准。",
+    heroes: ["暗裔英雄"],
+    params: {
+      "品质": "黄金",
+      "调整内容": "伤害统计口径改为减免前伤害"
+    }
+  },
+
+  // ===== 返场符文 =====
+  {
+    id: 55, name: "圣裁清算", quality: "gold", tier: "S", category: "return",
+    icon: "⚖️",
+    desc: "低血量目标处决类符文；已移除\"每次死亡后移除冷却时间\"效果。",
+    detail: "7.2版本重做返场，收割类符文。",
+    heroes: ["收割型英雄"],
+    params: {
+      "品质": "黄金",
+      "返场版本": "7.2",
+      "注意": "已移除死亡重置冷却效果"
+    }
+  },
+  {
+    id: 56, name: "回旋反击", quality: "gold", tier: "A", category: "return",
+    icon: "🔄",
+    desc: "7.2重做返场符文卡，受击反伤类（机制待图鉴复核）。",
+    detail: "重做返场，坦克战士适配。",
+    heroes: ["坦克", "战士"],
+    params: {
+      "品质": "黄金",
+      "返场版本": "7.2",
+      "注意": "机制数值待游戏内图鉴复核"
+    },
+    notice: true
+  },
+  {
+    id: 57, name: "愈战愈勇", quality: "silver", tier: "A", category: "return",
+    icon: "💪",
+    desc: "7.2版本返场重做符文。",
+    detail: "持续作战型符文。",
+    heroes: ["战士", "坦克"],
+    params: {
+      "品质": "白银",
+      "返场版本": "7.2",
+      "注意": "详细机制待图鉴核实"
+    },
+    notice: true
+  },
+  {
+    id: 58, name: "双星循环", quality: "silver", tier: "B", category: "return",
+    icon: "⭐⭐",
+    desc: "7.2版本返场重做符文。",
+    detail: "返场符文，机制以游戏内为准。",
+    heroes: ["全位置"],
+    params: {
+      "品质": "白银",
+      "返场版本": "7.2",
+      "注意": "详细机制待图鉴核实"
+    },
+    notice: true
+  },
+  {
+    id: 59, name: "共法契", quality: "silver", tier: "B", category: "return",
+    icon: "🤝",
+    desc: "7.2版本返场重做符文。",
+    detail: "团队型符文。",
+    heroes: ["辅助", "团队型英雄"],
+    params: {
+      "品质": "白银",
+      "返场版本": "7.2",
+      "注意": "详细机制待图鉴核实"
+    },
+    notice: true
+  }
+];
+
+// ============ T0邪修套路数据 ============
+const t0Builds = [
+  {
+    name: "无限双倍技能流",
+    type: "t0",
+    runes: ["技能回响", "超负荷", "最终形态"],
+    heroes: ["妖姬", "瑞兹", "卡牌", "小法"],
+    desc: "法师无解套路，技能释放频率拉满，爆发输出恐怖。超负荷叠层提供冷却回复和移速。"
+  },
+  {
+    name: "万血真伤坦爹流",
+    type: "t0",
+    runes: ["歌利亚巨人", "心之钢", "星落之盾", "生生不息"],
+    heroes: ["奥恩", "塞恩", "石头人", "龙龟"],
+    desc: "版本最肉无解套路，万血超高双抗，获得护盾时30%伤害转为真实伤害，又肉又有输出。"
+  },
+  {
+    name: "无限叠奶锁血流",
+    type: "t0",
+    runes: ["超凡邪疗", "星愿疗愈", "古式佳酿"],
+    heroes: ["所有软辅"],
+    desc: "辅助无解套路，超凡邪疗永久叠加治疗护盾强度，全队永续续航不死。"
+  },
+  {
+    name: "无大核弹流",
+    type: "t0",
+    runes: ["尤里卡", "珠光护手", "炼狱导管"],
+    heroes: ["皎月", "瑞兹", "吸血鬼"],
+    desc: "非常规最强爆发，尤里卡提供巨额技能急速，配合珠光护手技能暴击，小技能秒人。"
+  },
+  {
+    name: "隐身无限收割流",
+    type: "t0",
+    runes: ["幻刺", "节拍续燃", "影流禁术"],
+    heroes: ["劫", "阿卡丽", "螳螂"],
+    desc: "刺客天花板套路，隐身进场收割，标记提升50%伤害，连杀刷新技能永续作战。"
+  }
+];
+
+// ============ 娱乐骚套路数据 ============
+const funBuilds = [
+  {
+    name: "全自动轰炸机",
+    type: "fun",
+    runes: ["二重星光", "断音爆破", "技能回响"],
+    heroes: ["机器人", "法师"],
+    desc: "机器人专属整活，全自动连锁触发被动电伤，整活效果拉满。"
+  },
+  {
+    name: "全屏真伤风筝流",
+    type: "fun",
+    runes: ["二重奏", "火上浇油", "箭雨·岚"],
+    heroes: ["长手ADC", "射手"],
+    desc: "长手整活套路，双重真实伤害融化全员，远程风筝对手毫无还手之力。"
+  },
+  {
+    name: "移速跑酷流",
+    type: "fun",
+    runes: ["位移异变", "疾风瞬步", "星火暴走"],
+    heroes: ["全位置"],
+    desc: "全局拉扯流，全程超高移速无限位移，对手摸都摸不到你。"
+  },
+  {
+    name: "赌狗神装流",
+    type: "fun",
+    runes: ["潘多拉的装备", "后期大佬"],
+    heroes: ["全位置"],
+    desc: "运气天花板套路，全程重铸装备搏神装，大后期经济伤害双领先。"
+  }
+];
+
+// ============ 状态管理 ============
+let currentCategory = 'all';
+let currentQuality = 'all';
+let currentTier = 'all';
+let currentSort = 'tier';
+let searchQuery = '';
+
+// ============ 工具函数 ============
+const qualityMap = {
+  silver: { name: '白银', class: 'silver', tagClass: 'tag-quality-silver', color: '#9ca3af' },
+  gold: { name: '黄金', class: 'gold', tagClass: 'tag-quality-gold', color: '#f59e0b' },
+  prism: { name: '棱彩', class: 'prism', tagClass: 'tag-quality-prism', color: '#a855f7' }
+};
+
+const tierClassMap = {
+  'S+': 'tag-tier-splus',
+  'S': 'tag-tier-s',
+  'A': 'tag-tier-a',
+  'B': 'tag-tier-b',
+  'C': 'tag-tier-c'
+};
+
+const categoryNameMap = {
+  all: '全部符文',
+  heartsteel: '心之钢套系',
+  truedamage: '真实伤害套系',
+  rock: '五连摇滚套系',
+  adc: '射手/普攻流',
+  mage: '法师/技能流',
+  tank: '坦克/前排流',
+  support: '辅助/治疗流',
+  assassin: '刺客/突袭流',
+  special: '特殊功能',
+  hero: '英雄专属',
+  return: '返场符文'
+};
+
+function tierSortValue(tier) {
+  const order = { 'S+': 0, 'S': 1, 'A': 2, 'B': 3, 'C': 4 };
+  return order[tier] ?? 99;
+}
+
+function qualitySortValue(quality) {
+  const order = { prism: 0, gold: 1, silver: 2 };
+  return order[quality] ?? 99;
+}
+
+// ============ 渲染符文卡片 ============
+function renderRunes() {
+  const grid = document.getElementById('runeGrid');
+  const emptyState = document.getElementById('emptyState');
+
+  let filtered = runeData.filter(rune => {
+    // 分类筛选
+    if (currentCategory !== 'all' && rune.category !== currentCategory) return false;
+    // 品质筛选
+    if (currentQuality !== 'all' && rune.quality !== currentQuality) return false;
+    // 强度筛选
+    if (currentTier !== 'all' && rune.tier !== currentTier) return false;
+    // 搜索
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      return rune.name.toLowerCase().includes(q) ||
+             rune.desc.toLowerCase().includes(q) ||
+             rune.heroes.some(h => h.toLowerCase().includes(q));
+    }
+    return true;
+  });
+
+  // 排序
+  if (currentSort === 'tier') {
+    filtered.sort((a, b) => tierSortValue(a.tier) - tierSortValue(b.tier));
+  } else if (currentSort === 'quality') {
+    filtered.sort((a, b) => qualitySortValue(a.quality) - qualitySortValue(b.quality));
+  } else if (currentSort === 'name') {
+    filtered.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+  }
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    emptyState.style.display = 'block';
+    return;
+  }
+
+  emptyState.style.display = 'none';
+  grid.innerHTML = filtered.map(rune => {
+    const q = qualityMap[rune.quality];
+    return `
+      <div class="rune-card" style="--rune-color: ${q.color}; --rune-glow: ${q.color}33" onclick="showRuneDetail(${rune.id})">
+        <div class="rune-card-header">
+          <div class="rune-icon ${q.class}">${rune.icon}</div>
+          <div>
+            <div class="rune-name">${rune.name}${rune.notice ? '<span class="notice-badge">待核</span>' : ''}</div>
+            <div class="rune-tags">
+              <span class="rune-tag ${q.tagClass}">${q.name}</span>
+              <span class="rune-tag tag-tier ${tierClassMap[rune.tier]}">${rune.tier}</span>
+            </div>
+          </div>
+        </div>
+        <div class="rune-desc">${rune.desc}</div>
+        <div class="rune-card-footer">
+          <span class="rune-category">${categoryNameMap[rune.category] || ''}</span>
+          <span class="rune-detail-btn">详情 →</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ============ 显示符文详情 ============
+function showRuneDetail(id) {
+  const rune = runeData.find(r => r.id === id);
+  if (!rune) return;
+
+  const q = qualityMap[rune.quality];
+  const overlay = document.getElementById('modalOverlay');
+  const modalIcon = document.getElementById('modalIcon');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalTags = document.getElementById('modalTags');
+  const modalBody = document.getElementById('modalBody');
+
+  modalIcon.className = `modal-rune-icon ${q.class}`;
+  modalIcon.textContent = rune.icon;
+  modalTitle.textContent = rune.name + (rune.notice ? ' ⚠️' : '');
+
+  modalTags.innerHTML = `
+    <span class="rune-tag ${q.tagClass}">${q.name}品质</span>
+    <span class="rune-tag tag-tier ${tierClassMap[rune.tier]}">强度 ${rune.tier}</span>
+    <span class="rune-tag" style="background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-color);">${categoryNameMap[rune.category] || ''}</span>
+  `;
+
+  let bodyHtml = '';
+
+  // 符文效果
+  bodyHtml += `
+    <div class="modal-section">
+      <div class="modal-section-title">符文效果</div>
+      <div class="modal-section-content">
+        <p>${rune.desc}</p>
+        ${rune.detail ? `<p style="color: var(--accent-gold-light); margin-top: 8px;">💡 ${rune.detail}</p>` : ''}
+      </div>
+    </div>
+  `;
+
+  // 具体参数
+  if (rune.params && Object.keys(rune.params).length > 0) {
+    bodyHtml += `
+      <div class="modal-section">
+        <div class="modal-section-title">具体参数</div>
+        <table class="param-table">
+          ${Object.entries(rune.params).map(([k, v]) => `
+            <tr>
+              <td>${k}</td>
+              <td>${v}</td>
+            </tr>
+          `).join('')}
+        </table>
+      </div>
+    `;
+  }
+
+  // 适配英雄
+  if (rune.heroes && rune.heroes.length > 0) {
+    bodyHtml += `
+      <div class="modal-section">
+        <div class="modal-section-title">适配英雄</div>
+        <div class="hero-tags">
+          ${rune.heroes.map(h => `<span class="hero-tag">${h}</span>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  // 最优搭配
+  if (rune.combo) {
+    bodyHtml += `
+      <div class="modal-section">
+        <div class="modal-section-title">最优搭配</div>
+        <div class="modal-section-content" style="color: var(--accent-gold-light); font-weight: 500;">
+          ${rune.combo}
+        </div>
+      </div>
+    `;
+  }
+
+  // 提示
+  if (rune.notice) {
+    bodyHtml += `
+      <div class="modal-section">
+        <div class="modal-section-title">⚠️ 注意事项</div>
+        <div class="modal-section-content" style="color: #f59e0b;">
+          该符文的官方名称与部分机制待游戏内图鉴核实，请以游戏内实际内容为准。
+        </div>
+      </div>
+    `;
+  }
+
+  modalBody.innerHTML = bodyHtml;
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  const overlay = document.getElementById('modalOverlay');
+  overlay.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// 点击遮罩关闭
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ESC 关闭
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+// ============ 渲染套路 ============
+function renderBuilds() {
+  const t0Grid = document.getElementById('t0BuildsGrid');
+  const funGrid = document.getElementById('funBuildsGrid');
+
+  t0Grid.innerHTML = t0Builds.map(b => `
+    <div class="build-card" onclick="showBuildDetail('t0', ${t0Builds.indexOf(b)})">
+      <span class="build-type ${b.type}">T0 邪修</span>
+      <div class="build-name">${b.name}</div>
+      <div class="build-core">适配：${b.heroes.join('、')}</div>
+      <div class="build-runes">
+        ${b.runes.map(r => `<span class="build-rune">${r}</span>`).join('')}
+      </div>
+      <div class="build-desc">${b.desc}</div>
+    </div>
+  `).join('');
+
+  funGrid.innerHTML = funBuilds.map(b => `
+    <div class="build-card" onclick="showBuildDetail('fun', ${funBuilds.indexOf(b)})">
+      <span class="build-type ${b.type}">🎮 娱乐</span>
+      <div class="build-name">${b.name}</div>
+      <div class="build-core">适配：${b.heroes.join('、')}</div>
+      <div class="build-runes">
+        ${b.runes.map(r => `<span class="build-rune">${r}</span>`).join('')}
+      </div>
+      <div class="build-desc">${b.desc}</div>
+    </div>
+  `).join('');
+}
+
+function showBuildDetail(type, index) {
+  const build = type === 't0' ? t0Builds[index] : funBuilds[index];
+  const overlay = document.getElementById('modalOverlay');
+  const modalIcon = document.getElementById('modalIcon');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalTags = document.getElementById('modalTags');
+  const modalBody = document.getElementById('modalBody');
+
+  const typeLabel = type === 't0' ? 'T0 邪修黑科技' : '🎮 娱乐骚套路';
+  const typeClass = type === 't0' ? 't0' : 'fun';
+  const buildIcon = type === 't0' ? '⚡' : '🎮';
+
+  modalIcon.className = `modal-rune-icon ${type === 't0' ? 'prism' : 'gold'}`;
+  modalIcon.textContent = buildIcon;
+  modalTitle.textContent = build.name;
+
+  modalTags.innerHTML = `
+    <span class="build-type ${typeClass}" style="display:inline-block; padding:3px 10px; border-radius:10px; font-size:0.75rem; font-weight:700;">${typeLabel}</span>
+    <span class="rune-tag" style="background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-color);">${build.runes.length} 核心符文</span>
+  `;
+
+  let bodyHtml = '';
+
+  // 套路简介
+  bodyHtml += `
+    <div class="modal-section">
+      <div class="modal-section-title">套路效果</div>
+      <div class="modal-section-content" style="line-height: 1.8;">
+        ${build.desc}
+      </div>
+    </div>
+  `;
+
+  // 核心符文
+  bodyHtml += `
+    <div class="modal-section">
+      <div class="modal-section-title">核心符文（点击查看详情）</div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+  `;
+
+  build.runes.forEach(runeName => {
+    const rune = runeData.find(r => r.name === runeName);
+    if (rune) {
+      const q = qualityMap[rune.quality];
+      bodyHtml += `
+        <div onclick="closeModal(); setTimeout(() => showRuneDetail(${rune.id}), 200);"
+             style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.2s;"
+             onmouseover="this.style.borderColor='${q.color}'; this.style.background='var(--bg-card-hover)';"
+             onmouseout="this.style.borderColor='var(--border-color)'; this.style.background='var(--bg-card)';">
+          <div style="width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; background: ${q.color}33;">
+            ${rune.icon}
+          </div>
+          <div style="flex: 1;">
+            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">${rune.name}</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
+              <span style="color: ${q.color};">${q.name}</span> · 强度 <span style="color: var(--tier-${rune.tier === 'S+' ? 'splus' : rune.tier.toLowerCase()});">${rune.tier}</span>
+            </div>
+          </div>
+          <span style="color: var(--accent-gold); font-size: 0.8rem;">查看 →</span>
+        </div>
+      `;
+    } else {
+      bodyHtml += `
+        <div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; background: var(--border-color);">
+            ❓
+          </div>
+          <div style="flex: 1;">
+            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">${runeName}</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">机制待游戏内图鉴核实</div>
+          </div>
+        </div>
+      `;
+    }
+  });
+
+  bodyHtml += `</div></div>`;
+
+  // 适配英雄
+  bodyHtml += `
+    <div class="modal-section">
+      <div class="modal-section-title">适配英雄</div>
+      <div class="hero-tags">
+        ${build.heroes.map(h => `<span class="hero-tag">${h}</span>`).join('')}
+      </div>
+    </div>
+  `;
+
+  // 玩法思路
+  if (type === 't0') {
+    bodyHtml += `
+      <div class="modal-section">
+        <div class="modal-section-title">玩法核心思路</div>
+        <div class="modal-section-content" style="color: var(--accent-gold-light); line-height: 1.8;">
+          优先拿齐${build.runes.length}张核心符文，棱彩单卡质变优先，凑齐羁绊后效果爆炸。前期稳住发育，中后期成型后无敌。
+        </div>
+      </div>
+    `;
+  }
+
+  modalBody.innerHTML = bodyHtml;
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+// ============ 更新统计 ============
+function updateStats() {
+  document.getElementById('totalCount').textContent = runeData.length;
+  document.getElementById('prismCount').textContent = runeData.filter(r => r.quality === 'prism').length;
+  document.getElementById('splusCount').textContent = runeData.filter(r => r.tier === 'S+').length;
+}
+
+// ============ 事件绑定 ============
+// 搜索
+document.getElementById('searchInput').addEventListener('input', function(e) {
+  searchQuery = e.target.value.trim();
+  renderRunes();
+});
+
+// 分类标签
+document.querySelectorAll('.category-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+    currentCategory = this.dataset.cat;
+    renderRunes();
+  });
+});
+
+// 品质筛选
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    currentQuality = this.dataset.quality;
+    renderRunes();
+  });
+});
+
+// 侧边栏 - 强度筛选
+document.querySelectorAll('.sidebar-section:nth-child(1) .sidebar-item').forEach(item => {
+  item.addEventListener('click', function() {
+    document.querySelectorAll('.sidebar-section:nth-child(1) .sidebar-item').forEach(i => i.classList.remove('active'));
+    this.classList.add('active');
+    currentTier = this.dataset.tier;
+    renderRunes();
+  });
+});
+
+// 侧边栏 - 排序
+document.querySelectorAll('.sidebar-section:nth-child(2) .sidebar-item').forEach(item => {
+  item.addEventListener('click', function() {
+    document.querySelectorAll('.sidebar-section:nth-child(2) .sidebar-item').forEach(i => i.classList.remove('active'));
+    this.classList.add('active');
+    currentSort = this.dataset.sort;
+    renderRunes();
+  });
+});
+
+// 返回顶部按钮
+window.addEventListener('scroll', function() {
+  const btn = document.getElementById('backToTop');
+  if (window.scrollY > 300) {
+    btn.classList.add('show');
+  } else {
+    btn.classList.remove('show');
+  }
+});
+
+// 滚动到指定区域
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ============ 初始化 ============
+function init() {
+  renderRunes();
+  renderBuilds();
+  updateStats();
+}
+
+init();
+</script>
+</body>
+</html>
